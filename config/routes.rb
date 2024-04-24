@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :products
-  root "posts#index"
+  root "products#index"
   resources :posts
   
   get 'index2' => 'posts#index2'
@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'index5' => 'posts#index5test'
   get 'index6' => 'posts#index6'
   get 'test' => 'posts#test'
+  get 't' => 'products#t'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

@@ -1,23 +1,20 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
 
-  def t
-    
-  end
-  
   # GET /products or /products.json
+
+
   def index
     @product = Product.new
     @products = if params[:search]
-      Product.where('name LIKE ?', "%#{params[:search]}%")
+      Product.where('title LIKE ?', "%#{params[:search]}%")
     else
       Product.all
     end
   
     if params[:sort_by].present? && params[:order].present?
       if params[:category].present?
-        order = params[:order] == 'asc' ? 'asc' : 'desc'
-        @products = @products.where(category: params[:category]).order(name: order)
+        @products = @products.where(category: params[:category])
       else
         @products = @products.order(params[:sort_by] => params[:order])
       end

@@ -6,3 +6,12 @@
   <% end %>
 <% end %> 
 -->
+
+
+<!--
+
+<% Product.all.pluck(:category).uniq.each do |category| %>
+  <%= link_to category, products_path(sort_by: 'category', order: 'asc', category: category), class: 'text-blue-500 hover:text-blue-700' %>
+<% end %>
+
+-->
