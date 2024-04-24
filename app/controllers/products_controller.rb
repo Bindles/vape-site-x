@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
 
   def t
-    
+    @product = Product.last
   end
   
   # GET /products or /products.json
