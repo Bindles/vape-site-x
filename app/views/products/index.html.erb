@@ -7,6 +7,8 @@
 </head>
 <body>
 
+
+
 <!-- app/views/shared/_header.html.erb -->
 <header class="bg-black text-white py-2">
   <div class="container mx-auto flex justify-between items-center">
@@ -35,6 +37,25 @@
 <!-- app/views/index.html.erb -->
 <p style="color: green"><%= notice %></p>
 
+      <!-- Toggle switch -->
+  <label for="modeToggle" class="flex items-center cursor-pointer">
+    <span>Dark Mode</span>
+    <input id="modeToggle" type="checkbox" class="hidden" />
+    <span id="modeText" class="ml-2">Off</span>
+  </label>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const modeToggle = document.getElementById('modeToggle');
+      const modeText = document.getElementById('modeText');
+      const html = document.documentElement;
+
+      modeToggle.addEventListener('change', () => {
+        html.classList.toggle('dark', modeToggle.checked);
+        modeText.innerText = modeToggle.checked ? 'On' : 'Off';
+      });
+    });
+  </script>
 <h1>products</h1>
 
 <%= turbo_frame_tag 'targ' do %>

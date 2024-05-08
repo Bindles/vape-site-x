@@ -1,0 +1,105 @@
+<!-- app/views/shared/_header.html.erb -->
+<header class="bg-black text-white py-2">
+  <div class="container mx-auto flex justify-between items-center">
+    <div>
+      <span class="text-lg font-bold">products</span>
+    </div>
+    <div class="flex space-x-4">
+      <a href="#" class="hover:text-gray-500">Home</a>
+      <a href="#" class="hover:text-gray-500">Code</a>
+      <a href="#" class="hover:text-gray-500">Login</a>
+    </div>
+
+<%#INSERT1%>
+
+      <%= form_tag(products_path, method: 'get', class: 'flex items-center') do %>
+        <%= text_field_tag :search, params[:search], placeholder: 'Search products', class: 'rounded bg-gray-800 text-white px-4 py-2 focus:outline-none focus:shadow-outline' %>
+        <%= submit_tag 'Search', class: 'ml-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline' %>
+      <% end %>
+
+
+  </div>
+</header>
+
+
+
+<!-- app/views/index.html.erb -->
+<p style="color: green"><%= notice %></p>
+
+      <!-- Toggle switch -->
+  <label for="modeToggle" class="flex items-center cursor-pointer">
+    <span>Dark Mode</span>
+    <input id="modeToggle" type="checkbox" class="hidden" />
+    <span id="modeText" class="ml-2">Off</span>
+  </label>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const modeToggle = document.getElementById('modeToggle');
+      const modeText = document.getElementById('modeText');
+      const html = document.documentElement;
+
+      modeToggle.addEventListener('change', () => {
+        html.classList.toggle('dark', modeToggle.checked);
+        modeText.innerText = modeToggle.checked ? 'On' : 'Off';
+      });
+    });
+  </script>
+<h1>products</h1>
+
+<%= turbo_frame_tag 'targ' do %>
+  <%#= render partial: 'test_partial', locals: { component: @component } %>
+<% end %>
+
+<%#SORTING BY ATTRIBUTE LINKS | WRITE EACH%>
+<% if @products.first %>
+
+  <%= @products.first.attributes.keys     %>
+  <% unless @products.all? { |c| c[:title].blank? } %>
+    <%= link_to 'title', products_path(sort_by: 'title', order: (params[:order] == 'asc' && params[:sort_by] == 'title') ? 'desc' : 'asc'), class: 'text-blue-500 hover:text-blue-700' %>
+  <% end %>
+
+  <% unless @products.all? { |c| c[:content].blank? } %>
+    <%= link_to 'content', products_path(sort_by: 'content', order: (params[:order] == 'asc' && params[:sort_by] == 'content') ? 'desc' : 'asc'), class: 'text-blue-500 hover:text-blue-700' %>
+  <% end %>
+
+  <% unless @products.all? { |c| c[:created_at].blank? } %>
+    <%= link_to 'created_at', t3_path(sort_by: 'created_at', order: (params[:order] == 'asc' && params[:sort_by] == 'created_at') ? 'desc' : 'asc'), class: 'text-blue-500 hover:text-blue-700' %>
+  <% end %>
+
+
+  <br><br>
+
+  <%# AUTO-ITERATE TO DISPLAY LINKS TO EACH COMPONENT ATTRIBUTE FOR SORTING | .EACH DO |attr_name|%>
+  <% @products.first.attributes.keys.each do |attr_name| %>
+    <% unless @products.all? { |c| c[attr_name].blank? } %>
+      <%= link_to attr_name.capitalize, t3_path(sort_by: attr_name, order: (params[:order] == 'asc' && params[:sort_by] == attr_name) ? 'desc' : 'asc'), class: 'text-blue-500 hover:text-blue-700', data: { controller: 'sorting', action: 'click->sorting#sortproducts', sort_by: attr_name, order: (params[:order] == 'asc' && params[:sort_by] == attr_name) ? 'desc' : 'asc' } %>
+    <% end %>
+  <% end %>
+
+<% end %> 
+
+<%# COMMENT 177 ADD NEW SORTING HERE GENERATE ALL TITLE JSUT LIKE ABOVE AND HAVE THEM BE LINKS TO SORT, THEN ADD SORTING IN CONTROLLER. IT SHOULD SORT THEM BY ONLY products WITH MATCHING TITLE. ITS SUPPOSED TO BE BY CATEGORY BUT I DONT HAVE A GATEGORY MODEL YET SO PRETEND TITLE IS CATEGORY%>
+
+
+<% Product.all.pluck(:category).uniq.each do |category| %>
+  <%= link_to category, products_path(sort_by: category, order: (params[:sort_by] == category && params[:order] == 'asc') ? 'desc' : 'asc', category: category), class: 'text-blue-500 hover:text-blue-700' %>
+<% end %>
+
+<!-- index.html.erb -->
+<div class="container mx-auto px-4">
+  <div class="flowbite">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <% @products.each do |product| %>
+          <%= render partial: 'product_card', locals: { product: product } %>
+        <% end %>
+      </div>
+      <div>
+        <% @products.each do |product| %>
+          <%= render partial: 'product_card', locals: { product: product } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

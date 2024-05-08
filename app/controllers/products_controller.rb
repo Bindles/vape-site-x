@@ -4,6 +4,43 @@ class ProductsController < ApplicationController
   def t
     @product = Product.last
   end
+  def testpr
+    @product = Product.last
+  end
+  def testp
+    @products = Product.all
+  end
+  def t2
+    @products = Product.all
+  end
+  def t3
+    @product = Product.new
+    @products = if params[:search]
+      Product.where('name LIKE ?', "%#{params[:search]}%")
+    else
+      Product.all
+    end
+  
+    if params[:sort_by].present? && params[:order].present?
+      if params[:category].present?
+        order = params[:order] == 'asc' ? 'asc' : 'desc'
+        @products = @products.where(category: params[:category]).order(name: order)
+      else
+        @products = @products.order(params[:sort_by] => params[:order])
+      end
+    end
+  
+    # @visible_values = Product.pluck(:visible).uniq
+  
+    # if params[:visible].present?
+    #   selected_visible = params[:visible]
+    #   @products = @products.where(visible: selected_visible)
+    # end
+
+  end
+  def t4
+    @products = Product.all
+  end
   
   # GET /products or /products.json
   def index

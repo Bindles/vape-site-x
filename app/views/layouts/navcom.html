@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+
+  <style>
+    .parallax {
+     /* The image used 
+     background-image: url("https://www.w3schools.com/howto/img_parallax.jpg");
+     /* Set a specific height */
+     min-height: 500px;
+     /* Create the parallax scrolling effect */
+     background-attachment: fixed;
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
+   }
+
+   .mainview {
+     height: 50vh;
+   }
+
+.mainview2 {
+     height: 50vh;
+   }
+   
+   nav {
+     display: flex;
+     justify-content: space-between;
+     flex-flow: row nowrap;
+     position: fixed;
+     width: 100%;
+     background-color: black;
+     z-index: 999;
+     margin: 0 auto;
+     padding: 0;
+     height:100px;
+   }
+
+   .logo>img {
+     display: flex;
+     flex-flow: row nowrap;
+     width: 50%;
+     margin-top: 5%;
+     margin-left: 20%;
+   }
+
+   .navlist {
+     display: flex;
+     flex-flow: row nowrap;
+     width: 40%;
+     justify-content: space-evenly;
+     margin-top: 2.5%;
+     margin-left: 40%;
+     font-family: "arial";
+   }
+
+   h1{
+ margin: 0;
+   }
+
+   body{
+ border: 0;
+ margin: 0;
+   }
+
+   a:hover {
+     color: #66FFFF;
+   }
+
+   div a {
+     text-decoration: none;
+     color: #AAAAAA;
+   }
+
+   .search>img {
+     display: flex;
+     flex-flow: row nowrap;
+     margin: 30px 50px;
+     width: 20%;
+   }
+
+  
+
+</style>
+
+
+
+</head>
+<body>
+  <nav id="myNav">
+    <div><a href="" class="logo">Logo</a></div>
+    <div class="navlist">
+      <a href="">explore</a>
+      <a href="">Skill</a>
+      <a href="">login</a>
+    </div>
+    <div><a href="" class="search">Search</a> </div>
+  </nav>
+
+  <div class="parallax"></div>
+  <div>
+    <div class="mainview">
+      <h1>
+        Main view content
+      </h1>
+    </div>
+    <div class="mainview2">
+       <h1>
+        Main view 2 content
+      </h1>
+    </div>
+    <div style="height:1000px;background-color:red;font-size:36px">
+      Scroll Up and Down this page to see the parallax scrolling effect. This div is just here to enable scrolling. Tip: Try to remove the background-attachment property to remove the scrolling effect.
+    </div>
+    <div></div>
+    <div></div>
+  </div>
+  <div>
+    Test
+  </div>
+  
+<script>
+
+document.addEventListener('scroll', () => {
+  let myNav = document.getElementById("myNav");
+  myNav.style.opacity = window.scrollY !== 0 ? .6 : 1;
+
+});
+
+</script>
+  
+</body>
+</html>

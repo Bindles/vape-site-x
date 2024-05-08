@@ -1,8 +1,10 @@
 <%= form_tag posts_path, method: :get do %>
   <%= select_tag :visible, options_for_select(@visible_values, params[:visible]), include_blank: true %>
-  <%= submit_tag "Filter by Visible" %>
+  <%= submit_tag "Filter by Visible", class: "bg-black text-white border border-white rounded px-4 py-2 transition duration-300 ease-in-out hover:bg-white hover:text-black border-black" %>
 <% end %>
-<button class="btn btn-primary">AAAA</button>
+<button class="custom-btn">AAAA</button>
+<%= button_to 'abutton', '#' %>
+
 
 <%#= link_to 'Previous', { page: @current_page - 1 } if @current_page > 1 %>
 <%#= link_to 'Next', { page: @current_page + 1 } if @current_page < @total_pages %>

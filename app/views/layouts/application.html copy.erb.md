@@ -10,7 +10,6 @@
     <%= javascript_importmap_tags %>
     <%= javascript_include_tag 'custom/main' %>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
 
 <script>
     tailwind.config = {
@@ -61,15 +60,7 @@
     }
   </script>
 
-<style>
-    /* Optional: Define styles for dark mode */
-    .dark {
-      background-color: #333;
-      color: #fff;
-    }
-</style>
-
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
 
 
   <%# <style>

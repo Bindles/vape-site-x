@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vape Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto py-8">
+        <div class="grid grid-cols-3 gap-8">
+            <!-- Loop through vape products -->
+            <% @products.each do |product| %>
+                <div class="col-span-2">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="<%= product.image %>" alt="<%= product.name %>" class="w-full">
+                        <div class="p-6">
+                            <h2 class="text-xl font-semibold text-gray-800"><%= product.name %></h2>
+                            <p class="text-gray-600 mt-2"><%= raw(product.desc) %></p>
+                            <p class="text-gray-600 mt-2">Price: $<%= product.price %></p>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+            <!-- Display example sale items -->
+            <% sale_items = [
+                    { name: "Sale Item 1", description: "Description of sale item 1 goes here.", price: 19.99, original_price: 29.99, sale_price: 19.99, image_url: "sale_item_1.jpg" },
+                    { name: "Sale Item 2", description: "Description of sale item 2 goes here.", price: 24.99, original_price: 34.99, sale_price: 24.99, image_url: "sale_item_2.jpg" }
+                ]
+            %>
+            <% sale_items.each do |item| %>
+                <div class="col-span-1">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="<%= item[:image_url] %>" alt="<%= item[:name] %>" class="w-full">
+                        <div class="p-6">
+                            <h2 class="text-xl font-semibold text-gray-800"><%= item[:name] %></h2>
+                            <p class="text-gray-600 mt-2"><%= item[:description] %></p>
+                            <p class="text-gray-600 mt-2">Price: $<%= item[:price] %> <span class="line-through text-red-500">$<%= item[:original_price] %></span></p>
+                            <p class="text-green-500 mt-2">Sale Price: $<%= item[:sale_price] %></p>
+                        </div>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</body>
+
+</html>

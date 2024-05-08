@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet" />
+
+  <style>
+
+  </style>
+
+</head>
+<body>
+
+
+<div class="container mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @products.each do |product| %>
+      <div class="bg-white shadow-md p-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold text-gray-800"><%= product.name %></h2>
+          <span class="text-sm text-gray-600"><%= number_to_currency(product.price) %></span>
+        </div>
+        <p class="text-sm text-gray-600 mb-2"><%= product.created_at.strftime("%B %e, %Y") %></p>
+        <p class="text-sm text-gray-700 mb-4"><%= truncate(strip_tags(product.desc), length: 200, separator: ' ') %></p>
+        <img src="<%= product.image %>" alt="<%= product.name %>" class="w-full h-auto mb-2">
+        <hr class="my-4 border-t-2 border-blue-300">
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+</body>
+</html>
