@@ -93,8 +93,7 @@
 <%# COMMENT 177 ADD NEW SORTING HERE GENERATE ALL TITLE JSUT LIKE ABOVE AND HAVE THEM BE LINKS TO SORT, THEN ADD SORTING IN CONTROLLER. IT SHOULD SORT THEM BY ONLY products WITH MATCHING TITLE. ITS SUPPOSED TO BE BY CATEGORY BUT I DONT HAVE A GATEGORY MODEL YET SO PRETEND TITLE IS CATEGORY%>
 
 
-<%# Product.all.pluck(:category).uniq.each do |category| %>
-<% Product.select(:category).distinct.pluck(:category).each do |category| %>
+<% Product.all.pluck(:category).uniq.each do |category| %>
   <%= link_to category, products_path(sort_by: category, order: (params[:sort_by] == category && params[:order] == 'asc') ? 'desc' : 'asc', category: category), class: 'text-blue-500 hover:text-blue-700' %>
 <% end %>
 
@@ -288,134 +287,64 @@
 
 <!-- Create modal -->
 <div id="createProductModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-  <div class="relative p-4 w-full max-w-2xl max-h-full">
-    <!-- Modal content -->
-    <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-      <!-- Modal header -->
-      <div class="flex justify-between items-center pb-1 mb-2 rounded-t border-b sm:mb-3 dark:border-gray-600">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Add Product</h3>
-        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-target="createProductModal" data-modal-toggle="createProductModal">
-          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-          
-          <span class="sr-only">Close modal</span>
-        </button>
-      </div>
-      <!-- Modal body -->
-      <%= form_with(model: @product, url: products_path, class: "grid gap-2 mb-2 sm:grid-cols-2") do |form| %>
-        <div>
-          <%= form.label :name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-          <%= form.text_field :name, id: "product_name", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Type product name", required: true %>
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+            <!-- Modal header -->
+            <div class="flex justify-between items-center pb-1 mb-2 rounded-t border-b sm:mb-3 dark:border-gray-600">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Add Product</h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-target="createProductModal" data-modal-toggle="createProductModal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <%= form_with(model: @product, url: products_path, class: "grid gap-2 mb-2 sm:grid-cols-2") do |form| %>
+                <div>
+                    <%= form.label :name, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                    <%= form.text_field :name, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Type product name", required: true %>
+                </div>
+                <div>
+                    <%= form.label :handle, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                    <%= form.text_field :handle, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Product brand", required: true %>
+                </div>
+                <div>
+                    <%= form.label :price, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                    <%= form.number_field :price, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "$2999", required: true %>
+                </div>
+                <div>
+                    <%= form.label :brand, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                    <%= form.text_field :brand, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Product brand", required: true %>
+                </div>
+                <div>
+                    <%= form.label :category, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                    <%= form.select :category, options_for_select(["TV/Monitors", "PC", "Gaming/Console", "Phones"]), { prompt: "Select category" }, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" %>
+                </div>
+                <div>
+                    <%= form.label :image, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                    <%= form.text_field :image, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Product brand", required: true %>
+                </div>
+                <div>
+                    <%= form.label :options, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                    <%= form.text_field :options, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Product brand", required: true %>
+                </div>
+                <div>
+                    <%= form.label :variants, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                    <%= form.text_field :variants, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Product brand", required: true %>
+                </div>
+                <div class="sm:col-span-2">
+                    <%= form.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
+                    <%= form.text_area :description, rows: 2, class: "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Write product description here" %>
+                </div>
+                <div class="sm:col-span-2 pt-2">
+                    <%= form.submit "Add new product", class: "text-white inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" %>
+                </div>
+            <% end %>
         </div>
-        <div>
-          <%= form.label :handle, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-          <%= form.text_field :handle, id: "product_handle", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Product handle", required: true %>
-        </div>
-        <div>
-          <%= form.label :price, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-          <%= form.number_field :price, id: "product_price", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "$2999", required: true %>
-        </div>
-        <div>
-          <%= form.label :brand, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-          <%= form.text_field :brand, id: "product_brand", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Product brand", required: true %>
-        </div>
-        <div>
-          <%= form.label :category, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-          <%= form.select :category, options_for_select(["TV/Monitors", "PC", "Gaming/Console", "Phones"]), { prompt: "Select category" }, id: "product_category", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" %>
-        </div>
-        <div>
-          <%= form.label :image, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-          <%= form.text_field :image, id: "product_image", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Product image URL", required: true %>
-        </div>
-        <div>
-          <%= form.label :options, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-          <%= form.text_field :options, id: "product_options", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Product options", required: true %>
-        </div>
-        <div>
-          <%= form.label :variants, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-          <%= form.text_field :variants, id: "product_variants", class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Product variants", required: true %>
-        </div>
-        <div class="sm:col-span-2">
-          <%= form.label :description, class: "block mb-2 text-sm font-medium text-gray-900 dark:text-white" %>
-          <%= form.text_area :description, id: "product_desc", rows: 2, class: "block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500", placeholder: "Write product description here" %>
-        </div>
-        <div class="sm:col-span-2 flex justify-between items-center">
-          <button type="submit" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Add product</button>
-          <div>
-            <input type="text" id="fetchHandle" placeholder="Product Handle" value="uwell-caliburn-g-pod-system-kit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-            <button id="fetchButton" type="button" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Fetch Product</button>
-          </div>
-        </div>
-      <% end %>
     </div>
-  </div>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const fetchButton = document.getElementById('fetchButton');
-    const fetchHandleInput = document.getElementById('fetchHandle');
-
-    function getVariantImage(variantId, productData) {
-      const variants = productData.product.variants;
-      const images = productData.product.images;
-
-      const variant = variants.find(variant => variant.id === variantId);
-
-      if (variant) {
-        const image = images.find(image => image.id === variant.image_id);
-
-        if (image) {
-          return image.src;
-        }
-      }
-
-      return null;
-    }
-
-    fetchButton.addEventListener('click', function () {
-      const handle = fetchHandleInput.value;
-      
-      fetch(`https://www.eightvape.com/products/${handle}.json`)
-        .then(response => response.json())
-        .then(data => {
-          if (data['product']) {
-            const product = data['product'];
-            const variants = product['variants'];
-
-            document.getElementById('product_name').value = product['title'];
-            document.getElementById('product_handle').value = product['handle'];
-            document.getElementById('product_brand').value = product['vendor'];
-            document.getElementById('product_category').value = product['product_type'];
-            document.getElementById('product_desc').value = product['body_html'];
-            document.getElementById('product_image').value = product['image']['src'];
-            document.getElementById('product_options').value = product['options'][0]['name'];
-
-            const variantsJsonb = variants.map(variant => {
-              return {
-                title: variant.title,
-                price: variant.price,
-                image: getVariantImage(variant.id, data)
-              };
-            });
-
-            document.getElementById('product_variants').value = JSON.stringify(variantsJsonb);
-
-            const firstVariantPrice = variants.length > 0 ? variants[0].price : '';
-            document.getElementById('product_price').value = firstVariantPrice * 100;
-          } else {
-            alert('No product data available.');
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-          alert('Error fetching product data. Please try again.');
-        });
-    });
-  });
-</script>
-
 
 
 

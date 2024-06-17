@@ -116,13 +116,16 @@
               // Update value of po_name input field with product title
               document.getElementById('product_name').value = product['title'];
               document.getElementById('product_handle').value = product['handle'];
-              document.getElementById('product_price').value = product['price'];
               document.getElementById('product_brand').value = product['vendor'];
               document.getElementById('product_category').value = product['product_type']
               document.getElementById('product_desc').value = product['body_html'];
               document.getElementById('product_image').value = product['image']['src'];
               document.getElementById('product_options').value = product['options'][0]['name']
               document.getElementById('product_variants').value = JSON.stringify(variantsJsonb);
+
+              // Update product price with the first variant's price
+              const firstVariantPrice = variants.length > 0 ? variants[0].price : '';
+              document.getElementById('product_price').value = firstVariantPrice * 100;
             } else {
               productInfoList.innerHTML = '<p>No product data available.</p>';
             }
@@ -135,6 +138,3 @@
   </script>
 </body>
 </html>
-
-
-
